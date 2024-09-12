@@ -3,5 +3,16 @@ void turn(int dgr){
 }
 
 int getangle(){
-  
+ if(mySerial.available()){
+    t = mySerial.read();
+    Serial.println(t);
+  }
+  return t;
+}
+
+void a(){
+   if(mySerial.available()){
+    t = mySerial.read();
+    Serial.println(t);
+  }
 }
