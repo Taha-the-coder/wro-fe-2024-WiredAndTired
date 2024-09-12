@@ -4,15 +4,20 @@
 #include <Wire.h>
 #include "HUSKYLENS.h"
 #include <Servo.h>
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(9, 10);  // RX, TX pins
 
 void printResult(HUSKYLENSResult result);
+//others
+char t;
 
 //button
 int getval;
 
 //sonar setup
-const int trigPins[] = {15, 12};
-const int echoPins[] = {16, 11};
+const int trigPins[] = {16, 12};
+const int echoPins[] = {15, 11};
 int numsonar = 2 ;
 
 
@@ -47,6 +52,7 @@ int startingpos;
 void setup() {
   //attach components
   Serial.begin(115200);
+ 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
   Wire.begin();
@@ -62,16 +68,27 @@ void setup() {
   pinMode(8, OUTPUT);
   pinMode(7, OUTPUT);
   pinMode(6, OUTPUT);
-  
+  mySerial.begin(115200);
 
 
-  menu();
+  //menu();
   turn(0);    
-  startingpos = analogRead(A6);
+
+  
 }
 
 //mainloop
 void loop() {
-motortest();
+//motortest();
+//Serial.println(sonar(2));
+//firstround();
+while(getangle() == '0'){
+  turn(25);
+  Serial.println(getangle());
+}
+while(getangle() == '1'){
+  turn(0);
+  Serial.println(getangle());
+}
 
 }
