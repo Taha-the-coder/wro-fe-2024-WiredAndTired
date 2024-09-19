@@ -48,6 +48,8 @@ bool clockwise, counterclockwise;
 int counter = 0;
 
 int startingpos;
+int eye;
+char ang;
 //setup
 void setup() {
   //attach components
@@ -73,6 +75,8 @@ void setup() {
 
   //menu();
   turn(0);    
+  motor(100);
+
 
   
 }
@@ -82,13 +86,20 @@ void loop() {
 //motortest();
 //Serial.println(sonar(2));
 //firstround();
-while(getangle() == '0'){
-  turn(25);
-  Serial.println(getangle());
+eye = analogRead(A3);
+if(eye > 30){
+turn(0);
+ang = getangle();
 }
-while(getangle() == '1'){
-  turn(0);
-  Serial.println(getangle());
+if(eye < 30){
+  turn(-25);
+  while(ang != '0'){
+    ang = getangle();
+  }
+  ang = getangle();
+  while(ang != '1'){
+    ang = getangle();
+    turn(-25);
+  }
 }
-
 }
